@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="de">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Produkt – MIA</title><link rel="stylesheet" href="style.css"></head>
+<body>
+  <main id="main"></main>
+  <script src="products.js"></script><script src="shared.js"></script>
+  <script>
+    const p = getProduct(new URLSearchParams(location.search).get("id"));
+    let size = null;
+    if (!p) {
+      $("main").innerHTML = `<p>Produkt nicht gefunden. <a href="index.html">Zurück zum Shop</a></p>`;
+    } else {
+      document.title = `${p.brand} ${p.name} – MIA`;
+      const similar = getProducts().filter(x => x.brand === p.brand && x.id !== p.id).slice(0, 4);
+      $("main").innerHTML = `
+        <p class="crumbs"><a href="index.html">Shop</a> › ${esc(p.brand)} › ${esc(p.name)}</p>
+        <div class="pdp">
+          <div class="img big">${productImg(p)}${discount(p) ? `<span class="badge">-${discount(p)}%</span>` : ""}</div>
+          <div class="pdp-info">
+            <span class="brand">${esc(p.brand)}</span><h1>${esc(p.name)}</h1>
+            <p class="price big-price"><b>${eur(p.price)}</b>${p.oldPrice > p.price ? `<s>${eur(p.oldPrice)}</s>` : ""}</p>
+            <p class="note">inkl. MwSt., zzgl. Versand (gratis ab 100 €)</p>
+            <h3>Größe</h3>
+            <div class="sizes">${p.sizes.map(s => `<button class="chip size" data-s="${esc(s)}">${esc(s)}</button>`).join("")}</div>
+            <p id="sizeErr" class="err hidden">Bitte wähle eine Größe.</p>
+            <button id="addBtn" class="primary wide">In den Warenkorb</button>
+            <p class="delivery">✓ Lieferung in 2–4 Werktagen · ✓ 14 Tage Rückgabe · ✓ Originalware</p>
+            <h3>Beschreibung</h3><p>${esc(p.description || "Keine Beschreibung vorhanden.")}</p>
+          </div>
+        </div>
+        ${similar.length ? `<h2>Mehr von ${esc(p.brand)}</h2><div class="grid">${similar.map(x => `<div class="card"><a class="img" href="product.html?id=${x.id}">${productImg(x)}</a><div class="info"><a class="pname" href="product.html?id=${x.id}">${esc(x.name)}</a><span class="price"><b>${eur(x.price)}</b></span></div></div>`).join("")}</div>` : ""}`;
+      document.querySelector(".sizes").onclick = e => {
+        if (!e.target.dataset.s) return;
+        size = e.target.dataset.s; $("sizeErr").classList.add("hidden");
+        document.querySelectorAll(".size").forEach(b => b.classList.toggle("active", b.dataset.s === size));
+      };
+      $("addBtn").onclick = () => size ? add(p.id, size) : $("sizeErr").classList.remove("hidden");
+    }
+  </script>
+</body>
+</html>

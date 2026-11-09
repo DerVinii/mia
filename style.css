@@ -33,3 +33,26 @@ dialog form{display:flex;flex-direction:column;gap:10px}dialog input,dialog sele
 .row{display:flex;gap:10px}.row>*{flex:1}.note{font-size:12px;color:#777;margin:0}
 dialog button:not(.primary){padding:10px;border:1px solid #ddd;background:#fff;border-radius:8px;cursor:pointer}
 footer{text-align:center;padding:32px;color:#777;font-size:13px}
+/* Produktseite, Konto, Admin, Rechtstexte */
+a{color:inherit}.nav-link{text-decoration:none;white-space:nowrap}
+.btn{display:block;text-align:center;text-decoration:none;margin-top:auto}
+.pname{font-weight:700;text-decoration:none}.img{text-decoration:none;color:inherit}
+#searchForm{flex:1;display:flex}
+.crumbs{color:#777;font-size:14px}
+.pdp{display:grid;grid-template-columns:1fr 1fr;gap:32px;margin:16px 0 40px}
+.img.big{border-radius:12px;font-size:140px}.pdp-info h1{margin:4px 0}
+.big-price b{font-size:28px}.sizes{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:8px}
+.chip.size.active{background:#111;color:#fff}.wide{width:100%;padding:14px;font-size:16px;margin:12px 0}
+.err{color:#d22;font-size:14px;margin:4px 0}
+.narrow{max-width:760px}.two{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.box{background:#fff;border-radius:12px;padding:20px;box-shadow:0 1px 4px #0001;margin-bottom:16px;display:flex;flex-direction:column;gap:10px}
+.box input,.box select,.box textarea,main textarea{padding:10px;border:1px solid #ddd;border-radius:6px;font:inherit}
+.tag{background:#eee;padding:2px 8px;border-radius:6px;font-size:12px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.stats h2{margin:4px 0}
+table{width:100%;border-collapse:collapse;background:#fff;border-radius:12px;overflow:hidden;margin:16px 0}
+th,td{text-align:left;padding:10px;border-bottom:1px solid #eee;vertical-align:top;font-size:14px}
+main button:not(.primary):not(.chip){padding:6px 12px;border:1px solid #ddd;background:#fff;border-radius:6px;cursor:pointer}
+.legal{max-width:760px;line-height:1.6}.legal h2{margin-top:28px}
+.warn{background:#fff3cd;border:1px solid #ffe08a;padding:12px 16px;border-radius:8px;font-size:14px}
+footer a{color:#555}
+@media(max-width:700px){.pdp,.two,.stats{grid-template-columns:1fr}header{flex-wrap:wrap}}

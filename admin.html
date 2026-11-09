@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="de">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Admin – MIA</title><link rel="stylesheet" href="style.css"></head>
+<body>
+  <main id="main"></main>
+  <script src="products.js"></script><script src="shared.js"></script>
+  <script>
+    const ADMIN_PW = "admin"; // Mockup-Passwort
+    let tab = "products", editId = null;
+
+    function loginView() {
+      $("main").innerHTML = `<form id="alogin" class="box narrow"><h1>Admin-Login</h1>
+        <input type="password" name="pw" placeholder="Passwort (Mockup: admin)" required><button class="primary">Login</button><p id="aerr" class="err"></p></form>`;
+      $("alogin").onsubmit = e => {
+        e.preventDefault();
+        if (new FormData(e.target).get("pw") !== ADMIN_PW) return $("aerr").textContent = "Falsches Passwort.";
+        sessionStorage.setItem("admin", "1"); view();
+      };
+    }
+
+    function view() {
+      if (!sessionStorage.getItem("admin")) return loginView();
+      const orders = getOrders();
+      const revenue = orders.reduce((s, o) => s + o.total, 0);
+      $("main").innerHTML = `<h1>Admin-Panel</h1>
+        <div class="stats"><div class="box"><small>Bestellungen</small><h2>${orders.length}</h2></div>
+          <div class="box"><small>Umsatz</small><h2>${eur(revenue)}</h2></div>
+          <div class="box"><small>Produkte</small><h2>${getProducts().length}</h2></div></div>
+        <div class="filters"><button class="chip ${tab === "products" ? "active" : ""}" data-t="products">Produkte</button>
+          <button class="chip ${tab === "orders" ? "active" : ""}" data-t="orders">Bestellungen</button>
+          <button class="chip" id="alogout">Logout</button></div>
+        <div id="tab"></div>`;
+      document.querySelectorAll("[data-t]").forEach(b => b.onclick = () => { tab = b.dataset.t; editId = null; view(); });
+      $("alogout").onclick = () => { sessionStorage.removeItem("admin"); view(); };
+      tab === "products" ? productsTab() : ordersTab();
+    }
+
+    function productsTab() {
+      const ps = getProducts(), e = ps.find(p => p.id === editId) || {};
+      $("tab").innerHTML = `
+        <form id="pform" class="box"><h2>${editId ? "Produkt bearbeiten" : "Neues Produkt"}</h2>
+          <div class="row"><input required name="brand" placeholder="Marke" value="${esc(e.brand)}"><input required name="name" placeholder="Name" value="${esc(e.name)}"></div>
+          <div class="row"><input required name="category" placeholder="Kategorie (Schuhe, Oberteile, Hosen…)" value="${esc(e.category)}">
+            <input required name="sizes" placeholder="Größen, mit Komma getrennt" value="${esc((e.sizes || []).join(","))}"></div>
+          <div class="row"><input required type="number" step="0.01" min="0" name="price" placeholder="Preis" value="${esc(e.price)}">
+            <input type="number" step="0.01" min="0" name="oldPrice" placeholder="Alter Preis (optional)" value="${esc(e.oldPrice)}"></div>
+          <input name="image" placeholder="Bild-URL oder Pfad (optional)" value="${esc(e.image)}">
+          <textarea name="description" placeholder="Beschreibung" rows="3">${esc(e.description)}</textarea>
+          <div class="row"><button class="primary">${editId ? "Speichern" : "Hinzufügen"}</button>${editId ? `<button type="button" id="cancelEdit">Abbrechen</button>` : ""}</div></form>
+        <table><tr><th>Marke</th><th>Name</th><th>Kategorie</th><th>Preis</th><th></th></tr>
+          ${ps.map(p => `<tr><td>${esc(p.brand)}</td><td>${esc(p.name)}</td><td>${esc(p.category)}</td><td>${eur(p.price)}</td>
+            <td><button data-e="${p.id}">Bearbeiten</button> <button data-d="${p.id}">Löschen</button></td></tr>`).join("")}</table>
+        <p><button id="resetP">Beispiel-Produkte wiederherstellen</button></p>`;
+      $("pform").onsubmit = ev => {
+        ev.preventDefault(); const f = new FormData(ev.target);
+        const price = Number(f.get("price")), old = Number(f.get("oldPrice")) || price;
+        const item = { id: editId || Math.max(0, ...ps.map(p => p.id)) + 1, brand: f.get("brand").trim(), name: f.get("name").trim(),
+          category: f.get("category").trim(), price, oldPrice: old, image: f.get("image").trim(), description: f.get("description").trim(),
+          sizes: f.get("sizes").split(",").map(s => s.trim()).filter(Boolean) };
+        save("products", editId ? ps.map(p => p.id === editId ? item : p) : [...ps, item]);
+        editId = null; view();
+      };
+      if (editId) $("cancelEdit").onclick = () => { editId = null; view(); };
+      document.querySelectorAll("[data-e]").forEach(b => b.onclick = () => { editId = Number(b.dataset.e); view(); window.scrollTo(0, 0); });
+      document.querySelectorAll("[data-d]").forEach(b => b.onclick = () => {
+        if (confirm("Produkt wirklich löschen?")) { save("products", ps.filter(p => p.id !== Number(b.dataset.d))); view(); }
+      });
+      $("resetP").onclick = () => { if (confirm("Alle Änderungen an Produkten verwerfen?")) { localStorage.removeItem("products"); view(); } };
+    }
+
+    function ordersTab() {
+      const orders = getOrders();
+      $("tab").innerHTML = orders.length ? `<table><tr><th>Nr.</th><th>Datum</th><th>Kunde</th><th>Artikel</th><th>Summe</th><th>Status</th></tr>
+        ${orders.map(o => `<tr><td>${o.id}</td><td>${new Date(o.date).toLocaleDateString("de-DE")}</td>
+          <td>${esc(o.name)}<br><small>${esc(o.email)}<br>${esc(o.address)}</small></td>
+          <td>${o.items.map(i => `${i.qty}× ${esc(i.brand)} ${esc(i.name)} (${esc(i.size)})`).join("<br>")}</td><td>${eur(o.total)}</td>
+          <td><select data-o="${o.id}">${["Neu", "Bezahlt", "Versendet", "Geliefert", "Storniert"].map(s => `<option ${s === o.status ? "selected" : ""}>${s}</option>`).join("")}</select></td></tr>`).join("")}</table>`
+        : "<p>Noch keine Bestellungen. Lege im Shop eine Testbestellung an.</p>";
+      document.querySelectorAll("[data-o]").forEach(s => s.onchange = () => {
+        save("orders", getOrders().map(o => o.id === s.dataset.o ? { ...o, status: s.value } : o));
+      });
+    }
+    view();
+  </script>
+</body>
+</html>

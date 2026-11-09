@@ -1,16 +1,16 @@
 // Beispiel-Produkte. Preise/Bilder später durch echte Daten ersetzen.
 // Bild: Pfad in /images (z. B. "images/nike-tn.jpg"). Ohne Bild wird ein Platzhalter gezeigt.
 window.PRODUCTS = [
-  { id: 1,  brand: "Nike",         name: "Air Max 90",              category: "Schuhe",   price: 119.90, oldPrice: 149.90, sizes: ["40","41","42","43","44","45"], image: "" },
-  { id: 2,  brand: "Nike",         name: "Tech Fleece Hoodie",      category: "Oberteile",price: 99.90,  oldPrice: 129.90, sizes: ["S","M","L","XL"], image: "" },
-  { id: 3,  brand: "Jordan",       name: "Air Jordan 1 Low",        category: "Schuhe",   price: 109.90, oldPrice: 139.90, sizes: ["40","41","42","43","44","45"], image: "" },
-  { id: 4,  brand: "Jordan",       name: "Jumpman Sweatshirt",      category: "Oberteile",price: 79.90,  oldPrice: 99.90,  sizes: ["S","M","L","XL"], image: "" },
-  { id: 5,  brand: "Lacoste",      name: "Classic Polo L.12.12",    category: "Oberteile",price: 79.90,  oldPrice: 99.90,  sizes: ["S","M","L","XL","XXL"], image: "" },
-  { id: 6,  brand: "Lacoste",      name: "Carnaby Sneaker",         category: "Schuhe",   price: 74.90,  oldPrice: 99.90,  sizes: ["40","41","42","43","44"], image: "" },
-  { id: 7,  brand: "Tommy Hilfiger", name: "Essential Hoodie",      category: "Oberteile",price: 69.90,  oldPrice: 99.90,  sizes: ["S","M","L","XL"], image: "" },
-  { id: 8,  brand: "Tommy Hilfiger", name: "Slim Fit Jeans",        category: "Hosen",    price: 74.90,  oldPrice: 109.90, sizes: ["30/32","32/32","34/32","36/34"], image: "" },
-  { id: 9,  brand: "Stone Island", name: "Crewneck Sweatshirt",     category: "Oberteile",price: 189.90, oldPrice: 239.90, sizes: ["S","M","L","XL"], image: "" },
-  { id: 10, brand: "Stone Island", name: "Cargo Hose",              category: "Hosen",    price: 199.90, oldPrice: 259.90, sizes: ["30","32","34","36"], image: "" },
-  { id: 11, brand: "Polo Ralph Lauren", name: "Custom Slim Polo",   category: "Oberteile",price: 84.90,  oldPrice: 109.90, sizes: ["S","M","L","XL"], image: "" },
-  { id: 12, brand: "Polo Ralph Lauren", name: "Pullover Hoodie",    category: "Oberteile",price: 99.90,  oldPrice: 129.90, sizes: ["S","M","L","XL"], image: "" }
+  { id: 1,  brand: "Nike",         name: "Air Max 90",              category: "Schuhe",   price: 119.90, oldPrice: 149.90, sizes: ["40","41","42","43","44","45"], image: "", description: "Beispielbeschreibung: Originalware, neu mit Etikett. Material, Passform und Pflegehinweise trägst du hier ein." },
+  { id: 2,  brand: "Nike",         name: "Tech Fleece Hoodie",      category: "Oberteile",price: 99.90,  oldPrice: 129.90, sizes: ["S","M","L","XL"], image: "", description: "Beispielbeschreibung: Originalware, neu mit Etikett. Material, Passform und Pflegehinweise trägst du hier ein." },
+  { id: 3,  brand: "Jordan",       name: "Air Jordan 1 Low",        category: "Schuhe",   price: 109.90, oldPrice: 139.90, sizes: ["40","41","42","43","44","45"], image: "", description: "Beispielbeschreibung: Originalware, neu mit Etikett. Material, Passform und Pflegehinweise trägst du hier ein." },
+  { id: 4,  brand: "Jordan",       name: "Jumpman Sweatshirt",      category: "Oberteile",price: 79.90,  oldPrice: 99.90,  sizes: ["S","M","L","XL"], image: "", description: "Beispielbeschreibung: Originalware, neu mit Etikett. Material, Passform und Pflegehinweise trägst du hier ein." },
+  { id: 5,  brand: "Lacoste",      name: "Classic Polo L.12.12",    category: "Oberteile",price: 79.90,  oldPrice: 99.90,  sizes: ["S","M","L","XL","XXL"], image: "", description: "Beispielbeschreibung: Originalware, neu mit Etikett. Material, Passform und Pflegehinweise trägst du hier ein." },
+  { id: 6,  brand: "Lacoste",      name: "Carnaby Sneaker",         category: "Schuhe",   price: 74.90,  oldPrice: 99.90,  sizes: ["40","41","42","43","44"], image: "", description: "Beispielbeschreibung: Originalware, neu mit Etikett. Material, Passform und Pflegehinweise trägst du hier ein." },
+  { id: 7,  brand: "Tommy Hilfiger", name: "Essential Hoodie",      category: "Oberteile",price: 69.90,  oldPrice: 99.90,  sizes: ["S","M","L","XL"], image: "", description: "Beispielbeschreibung: Originalware, neu mit Etikett. Material, Passform und Pflegehinweise trägst du hier ein." },
+  { id: 8,  brand: "Tommy Hilfiger", name: "Slim Fit Jeans",        category: "Hosen",    price: 74.90,  oldPrice: 109.90, sizes: ["30/32","32/32","34/32","36/34"], image: "", description: "Beispielbeschreibung: Originalware, neu mit Etikett. Material, Passform und Pflegehinweise trägst du hier ein." },
+  { id: 9,  brand: "Stone Island", name: "Crewneck Sweatshirt",     category: "Oberteile",price: 189.90, oldPrice: 239.90, sizes: ["S","M","L","XL"], image: "", description: "Beispielbeschreibung: Originalware, neu mit Etikett. Material, Passform und Pflegehinweise trägst du hier ein." },
+  { id: 10, brand: "Stone Island", name: "Cargo Hose",              category: "Hosen",    price: 199.90, oldPrice: 259.90, sizes: ["30","32","34","36"], image: "", description: "Beispielbeschreibung: Originalware, neu mit Etikett. Material, Passform und Pflegehinweise trägst du hier ein." },
+  { id: 11, brand: "Polo Ralph Lauren", name: "Custom Slim Polo",   category: "Oberteile",price: 84.90,  oldPrice: 109.90, sizes: ["S","M","L","XL"], image: "", description: "Beispielbeschreibung: Originalware, neu mit Etikett. Material, Passform und Pflegehinweise trägst du hier ein." },
+  { id: 12, brand: "Polo Ralph Lauren", name: "Pullover Hoodie",    category: "Oberteile",price: 99.90,  oldPrice: 129.90, sizes: ["S","M","L","XL"], image: "", description: "Beispielbeschreibung: Originalware, neu mit Etikett. Material, Passform und Pflegehinweise trägst du hier ein." }
 ];

@@ -1,57 +1,13 @@
 <!DOCTYPE html>
 <html lang="de">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>MIA – Marken-Fashion zum fairen Preis</title>
-  <link rel="stylesheet" href="style.css">
-</head>
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MIA – Marken-Fashion zum fairen Preis</title><link rel="stylesheet" href="style.css"></head>
 <body>
-  <div class="topbar">🚚 Lieferung in 2–4 Werktagen · Gratis Versand ab 100 € · 14 Tage Rückgabe</div>
-  <header>
-    <a class="logo" href="#">MIA</a>
-    <input id="search" type="search" placeholder="Marke oder Produkt suchen…">
-    <button id="cartBtn" class="cart-btn">🛒 Warenkorb (<span id="cartCount">0</span>)</button>
-  </header>
-
   <section class="hero">
     <h1>Marken-Klamotten &amp; Sneaker<br>zu Preisen, die passen.</h1>
     <p>Nike · Jordan · Lacoste · Tommy Hilfiger · Stone Island · Polo</p>
   </section>
-
-  <main>
-    <div class="filters" id="filters"></div>
-    <div class="grid" id="grid"></div>
-  </main>
-
-  <aside id="cart" class="cart hidden">
-    <div class="cart-head"><h2>Warenkorb</h2><button id="closeCart">✕</button></div>
-    <div id="cartItems"></div>
-    <div class="cart-foot">
-      <div>Zwischensumme: <b id="subtotal">0,00 €</b></div>
-      <div>Versand: <b id="shipping">0,00 €</b></div>
-      <div class="total">Gesamt: <b id="total">0,00 €</b></div>
-      <button id="checkoutBtn" class="primary">Zur Kasse</button>
-    </div>
-  </aside>
-
-  <dialog id="checkout">
-    <form method="dialog" id="checkoutForm">
-      <h2>Bestellung abschließen</h2>
-      <input required name="name" placeholder="Vor- und Nachname">
-      <input required name="street" placeholder="Straße und Hausnummer">
-      <div class="row"><input required name="zip" placeholder="PLZ"><input required name="city" placeholder="Ort"></div>
-      <input required type="email" name="email" placeholder="E-Mail">
-      <select name="pay"><option>PayPal</option><option>Kreditkarte</option><option>Klarna</option><option>Vorkasse</option></select>
-      <p class="note">Demo: Es wird noch keine echte Zahlung ausgelöst.</p>
-      <div class="row"><button type="button" id="cancelCheckout">Abbrechen</button><button class="primary" type="submit">Jetzt kaufen</button></div>
-    </form>
-  </dialog>
-
-  <footer>
-    <p>© MIA · Impressum · Datenschutz · AGB · Widerruf · Versand &amp; Rückgabe</p>
-  </footer>
-  <script src="products.js"></script>
-  <script src="app.js"></script>
+  <main><div class="filters" id="filters"></div><div class="grid" id="grid"></div></main>
+  <script src="products.js"></script><script src="shared.js"></script><script src="app.js"></script>
 </body>
 </html>

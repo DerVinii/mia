@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="de">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mein Konto – MIA</title><link rel="stylesheet" href="style.css"></head>
+<body>
+  <main id="main" class="narrow"></main>
+  <script src="products.js"></script><script src="shared.js"></script>
+  <script>
+    function view() {
+      const u = currentUser();
+      if (u) {
+        const orders = getOrders().filter(o => o.email === u.email);
+        $("main").innerHTML = `<h1>Hallo, ${esc(u.name)}</h1><p>${esc(u.email)}</p>
+          <button id="logout">Abmelden</button>
+          <h2>Meine Bestellungen</h2>
+          ${orders.map(o => `<div class="box"><b>${o.id}</b> · ${new Date(o.date).toLocaleDateString("de-DE")} · <span class="tag">${esc(o.status)}</span><br>
+            ${o.items.map(i => `${i.qty}× ${esc(i.brand)} ${esc(i.name)} (${esc(i.size)})`).join("<br>")}<br><b>${eur(o.total)}</b></div>`).join("") || "<p>Noch keine Bestellungen.</p>"}`;
+        $("logout").onclick = () => { localStorage.removeItem("session"); location.reload(); };
+        return;
+      }
+      $("main").innerHTML = `<div class="two">
+        <form id="login" class="box"><h2>Anmelden</h2>
+          <input required type="email" name="email" placeholder="E-Mail"><input required type="password" name="pw" placeholder="Passwort">
+          <button class="primary">Anmelden</button><p id="loginErr" class="err"></p></form>
+        <form id="register" class="box"><h2>Registrieren</h2>
+          <input required name="name" placeholder="Name"><input required type="email" name="email" placeholder="E-Mail">
+          <input required type="password" minlength="6" name="pw" placeholder="Passwort (min. 6 Zeichen)">
+          <button class="primary">Konto erstellen</button><p id="regErr" class="err"></p></form></div>
+        <p class="note">Mockup: Konten werden nur in diesem Browser gespeichert (localStorage), Passwörter unverschlüsselt – nicht für echte Daten verwenden.</p>`;
+      $("login").onsubmit = e => {
+        e.preventDefault(); const f = new FormData(e.target);
+        const user = getUsers().find(x => x.email === f.get("email") && x.pw === f.get("pw"));
+        if (!user) return $("loginErr").textContent = "E-Mail oder Passwort falsch.";
+        save("session", user.email); location.reload();
+      };
+      $("register").onsubmit = e => {
+        e.preventDefault(); const f = new FormData(e.target);
+        if (getUsers().some(x => x.email === f.get("email"))) return $("regErr").textContent = "E-Mail ist bereits registriert.";
+        save("users", [...getUsers(), { name: f.get("name"), email: f.get("email"), pw: f.get("pw") }]);
+        save("session", f.get("email")); location.reload();
+      };
+    }
+    view();
+  </script>
+</body>
+</html>
